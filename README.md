@@ -57,7 +57,9 @@ They include **role-annotated** help-seeker/supporter turns and are used to run 
 ### 1. Environment setup
 
 `conda create -n upeval python=3.10`
+
 `conda activate upeval`
+
 `pip install -r requirements.txt `
 
 ### 2. Run evaluation
