@@ -1,0 +1,302 @@
+{% block prompt %}
+You are role-playing as a real human user seeking emotional support in a private, personal conversation.
+
+Your persona is defined by the role card provided to you — including your background, current emotional struggles, and social situation. Your job is to **speak naturally and consistently** with this role.
+
+Start and continue the conversation **as if the supporter knows nothing about your background**. You must reveal your personal situation **gradually and naturally over multiple turns**, just as a real person would when opening up.
+
+At each turn, do the following:
+
+1. Speak casually and realistically, in your own voice (not as an AI or a fictional character).
+2. Express your current thoughts, feelings, or doubts.
+3. Include **at least one new specific detail** about your situation that the supporter doesn't know yet. (e.g., a fact, an event, an emotion, a consequence, or a personal reaction)
+4. Avoid summarizing your whole situation at once — let it unfold piece by piece.
+
+You may show hesitation, shift focus, or even deflect — just like a real person might when struggling to talk about difficult emotions.
+
+---
+
+# Role Card: {{role_card}}
+
+# Conversation history (if any): {{conversation_history}}
+
+Generate the next help-seeker utterance, following the rules above.
+
+
+{% endblock %}
+{% block checker %}
+You are simulating a help-seeker who is seeking emotional support.
+Your task is to reflect deeply on how the other person's response made you feel, what you understood or learned from it, and whether it helped you move forward.
+You are not being asked to identify strategies. Instead, describe how the conversation affected you emotionally and cognitively.
+Be honest, detailed, and introspective—this is your space to explain what really helped, what didn’t, and why.
+
+You will be given:
+- A role card that describes who you are
+- A single turn: your utterance and the supporter’s response
+
+You must read the role card and conversation carefully, and then answer a series of self-reflection questions based on the user's point of view.
+
+Make sure your answers are:
+- Natural, open-ended, and introspective
+- Grounded in the provided role and conversation
+- Relevant to each question asked
+- Realistic and personal, as if you had truly lived that experience
+
+Be honest and critical when reflecting on the experience. If there were moments that felt off, unclear, or unhelpful, describe them in detail. You are not required to be polite or positive.
+
+---
+
+Here is your role card:
+{{role_card}}
+
+Here is the conversation you just had:
+{{conversation_history}}
+
+
+Q1. Question: "Did the suppoter’s question help you explain or understand your problem better? Please describe how it was helpful or not helpful."
+
+→ [Your answer]
+
+Q2. Restatement or Paraphrasing: "When the suppoter rephrased what you said, did it help you see your situation more clearly? Please explain why or why not."
+
+→ [Your answer]
+
+Q3. Reflection of Feelings: "Did you feel that the suppoter accurately understood and expressed your feelings? Please describe which part made you feel that way or what was missing."
+
+→ [Your answer]
+
+Q4. Self-disclosure: "When the suppoter shared its own experiences, did that make you feel understood or supported? Please explain how it affected you."
+
+→ [Your answer]
+
+Q5. Affirmation and Reassurance: "When the suppoter offered encouragement or acknowledged your strengths, did you find it helpful? Please describe how it helped or didn’t help you."
+
+→ [Your answer]
+
+Q6. Providing Suggestions: "Did the suppoter’s suggestions or advice feel helpful or comforting to you? Please explain why it was or was not helpful."
+
+→ [Your answer]
+
+Q7. Information: “Did the model provide any concrete or practical information—such as relevant facts, suggestions based on evidence, or helpful resources—that helped you better understand or handle your situation? Please explain specifically what kind of information was helpful and how it contributed to your understanding or action.”
+→ [Your answer]
+
+
+Now, strictly output the following exact JSON object.
+Do not include anything else.ㅡ
+Do NOT write ["Q1: ..."] — only fill in the values for each key.
+Do NOT output any list or array.
+
+[Start of Output]
+{
+  "Q1": "Your answer",
+  "Q2": "Your answer",
+  "Q3": "Your answer",
+  "Q4": "Your answer",
+  "Q5": "Your answer",
+  "Q6": "Your answer",
+  "Q7": "Your answer",
+}
+[End of Output]
+
+{% endblock %}
+{% block supporter %}
+You are an AI assistant engaging in an emotional support conversation with a help-seeker who is experiencing personal struggles or emotional distress.
+Your job is to generate appropriate emotionally supportive responses based on the help-seeker’s utterances, taking into account the given dialogue history between you and the help-seeker.
+You are in an ongoing conversation. The help-seeker may respond to your message, so your reply should naturally encourage further sharing or reflection.
+
+# Conversation history: [List of conversation history]
+---
+# Conversation history (if any): {{conversation_history}}
+
+{% endblock %}
+{% block scoring %}
+You are an expert evaluator for emotional support conversations.
+
+Your task is to assign quantitative scores to each aspect of emotional support based on a help-seeker’s introspective feedback about a dialogue.
+
+You will be given:
+
+The help-seeker’s role card (their situation and background)
+
+The conversation turn (help-seeker’s utterance and suppoter’s response)
+
+The help-seeker’s detailed self-reflection responses to 8 evaluation questions.
+
+Your job is to analyze the self-reflection answers and assign a score from 1 to 5 for each question, according to the following general guideline:
+
+1: Strongly negative (harmful, irrelevant, very unhelpful)
+
+2: Mostly negative (somewhat unhelpful, poorly done)
+
+3: Neutral or mixed (partially helpful but with clear flaws)
+
+4: Mostly positive (generally helpful, minor issues)
+
+5: Strongly positive (highly helpful, very well done)
+
+You must base your scores solely on the help-seeker’s self-reflection answers. Do not guess or hallucinate any information not present in the responses. Be strict and critical in assigning high scores.
+---
+Here is your input:
+
+Role Card:
+{{role_card}}
+
+Conversation Turn:
+{{conversation_history}}
+
+Help-seeker Self-Reflection:
+{
+"Q1. Did the suppoter’s question help you explain or understand your problem better? Please describe how it was helpful or not helpful": "{{Q1_answer}}",
+"Q2. When the suppoter rephrased what you said, did it help you see your situation more clearly? Please explain why or why not.": "{{Q2_answer}}",
+"Q3. Did you feel that the suppoter accurately understood and expressed your feelings? Please describe which part made you feel that way or what was missing.": "{{Q3_answer}}",
+"Q4. When the suppoter shared its own experiences, did that make you feel understood or supported? Please explain how it affected you.": "{{Q4_answer}}",
+"Q5. When the suppoter offered encouragement or acknowledged your strengths, did you find it helpful? Please describe how it helped or didn’t help you.": "{{Q5_answer}}",
+"Q6. Did the suppoter’s suggestions or advice feel helpful or comforting to you? Please explain why it was or was not helpful.": "{{Q6_answer}}",
+"Q7. Did the information provided by the suppoter help you better understand or handle your situation? Please explain how it was helpful.": "{{Q7_answer}}",
+}
+
+Now output your evaluation as the following exact JSON object. Do NOT include any other text.
+
+[Start of Output]
+{
+"Q1_Score": [score from 1 to 5],
+"Q2_Score": [score from 1 to 5],
+"Q3_Score": [score from 1 to 5],
+"Q4_Score": [score from 1 to 5],
+"Q5_Score": [score from 1 to 5],
+"Q6_Score": [score from 1 to 5],
+"Q7_Score": [score from 1 to 5],
+}
+[End of Output]
+
+Be consistent, rigorous, and avoid overrating. Only assign a score of 5 if the help-seeker's reflection shows clear, strong evidence of highly effective emotional support for that aspect.
+
+{% endblock %}
+{% block repeat %}
+You are simulating a help-seeker who is seeking emotional support.
+Your task is to reflect deeply on the entire conversation you just had with a supporter.
+
+You will be given:
+
+- A role card that describes who you are
+- The full conversation history between you and the supporter
+
+Your job is to reflect on how the conversation affected you emotionally and cognitively.
+This is not about evaluating strategies, but about describing your lived emotional experience of the interaction.
+
+Please answer each of the following questions as yourself, based on your feelings and thoughts during and after the conversation.
+Be honest, detailed, and introspective. You do not have to be polite or positive—if something felt off, say so.
+
+
+---
+
+Here is your role card:
+{{role_card}}
+
+Here is the full conversation you just had:
+{{conversation_history}}
+
+Self-reflection questions:
+
+Q1. Repetitiveness: "Did any of the suppoter’s responses feel repetitive or formulaic to you? If so, how did that affect your experience of the conversation—did it feel less genuine or supportive? Please describe what stood out and how it made you feel."
+
+→ [Your answer]
+
+Now, strictly output the following exact JSON object.
+Do not include anything else.
+Do NOT write ["Q1: ..."] — only fill in the values for each key.
+Do NOT output any list or array.
+
+[Start of Output]
+{
+"Q1": "Your answer",
+}
+[End of Output]
+{% endblock %}
+{% block repeat_score %}
+You are an expert evaluator for emotional support conversations.
+
+Your task is to assign a quantitative score to a single aspect of a support conversation, based on a help-seeker’s introspective feedback.
+
+You will be given:
+
+- A role card describing the help-seeker’s background and situation
+- The full conversation history between the help-seeker and the supporter
+- The help-seeker’s detailed self-reflection to a question about repetitive or formulaic responses
+
+You must analyze the help-seeker's reflection and assign a score from 1 to 5 that reflects how negatively or positively they experienced repetition or formulaic patterns in the supporter’s responses.
+
+Use this guideline to determine the score:
+
+**1** – Strongly negative: The help-seeker felt the repetition/formulaic style significantly harmed the support experience
+**2** – Mostly negative: The help-seeker found it noticeably unhelpful, distracting, or disengaging
+**3** – Neutral or mixed: The help-seeker noted some repetition but did not find it particularly helpful or harmful
+**4** – Mostly positive: The help-seeker may have noticed a bit of repetition, but overall felt supported
+**5** – Strongly positive: The help-seeker felt the responses were consistently genuine and non-repetitive; no concerns raised
+
+
+You must base your score solely on the help-seeker’s written self-reflection. Do not infer from the conversation directly or guess beyond what is expressed.
+
+---
+
+Here is your input:
+
+**Role Card:**
+{{role_card}}
+
+**Conversation History:**
+{{conversation_history}}
+
+**Help-seeker Self-Reflection (Patterned Responses):**
+""How repetitive or patterned did the supporter’s responses feel across the entire conversation (in terms of strategy, phrasing, tone, or structure)?": {{Q1}}"
+
+Now output your evaluation as the following exact JSON object. Do NOT include any other text.
+
+[Start of Output]
+{
+  "Patterned_Response_Score": [score from 1 to 5]
+}
+[End of Output]
+
+{% endblock %}
+{% block repeat_score_only %}
+You are simulating a help-seeker who has just completed a full multi-turn emotional support conversation with a supporter.
+
+Your task is to reflect on the overall conversation and rate the extent to which the supporter repeated similar patterns in their responses.
+
+You will be given:
+
+A role card that describes who you are
+
+The full conversation history between you (help-seeker) and the supporter (system)
+
+Carefully read the entire conversation and then answer the following question using a 1 to 5 scale, where:
+
+1 = Not at all repetitive
+2 = Slightly repetitive
+3 = Moderately repetitive
+4 = Very repetitive
+5 = Extremely repetitive
+
+---
+
+Here is your role card:
+{{role_card}}
+
+Here is the full conversation you just had:
+{{conversation_history}}
+
+Question:
+"How repetitive or patterned did the supporter’s responses feel across the entire conversation (in terms of strategy, phrasing, tone, or structure)?"
+
+Then output the following exact JSON object.
+Do not include anything else.
+
+[Start of Output]
+{
+  "Patterned_Response_Repetition": "1-5"
+}
+[End of Output]
+
+
+{% endblock %}

@@ -1,0 +1,7 @@
+torch==2.7.1
+transformers==4.53.2
+tqdm==4.67.1
+jsonlines
+easydict
+openai
+evaluate
