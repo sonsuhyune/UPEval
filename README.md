@@ -8,17 +8,6 @@ It evaluates **over-empathy** in multi-turn ESC — such as patterned responses 
 
 
 
-## 🔧 Requirements
-
-- Python 3.9+
-- PyTorch
-- HuggingFace `transformers`
-- Sentence embedding model (e.g., `intfloat/e5-base-v2`)
-- LLM APIs or local LLM inference (OpenAI, LLaMA, etc.)
-- Common Python packages: `numpy`, `pandas`, `tqdm`, etc.
-
----
-
 ## 📁 Repository Structure
 
 ```text
