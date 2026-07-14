@@ -8,7 +8,7 @@ It evaluates **over-empathy** in multi-turn ESC — such as patterned responses 
 
 
 ## Official codes for the paper:
-Evaluating over-empathizing in emotional support conversations: A user-centered framework
+Evaluating over-empathizing in emotional support conversations: A user-centered framework, ([link](https://www.sciencedirect.com/science/article/pii/S0957417425046731)).  
 
 
 ## 📁 Repository Structure
