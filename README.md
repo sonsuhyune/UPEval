@@ -7,6 +7,9 @@ It evaluates **over-empathy** in multi-turn ESC — such as patterned responses 
 - **open-ended, user-centered feedback scoring model**.
 
 
+## Official codes for the paper:
+Evaluating over-empathizing in emotional support conversations: A user-centered framework
+
 
 ## 📁 Repository Structure
 
@@ -87,9 +90,15 @@ This will execute:
 
 
 
-## 📬 Contact
-
-If you have questions about the implementation or the paper, please contact:  
-**Suhyune Son** — ssh5131@korea.ac.kr
-
+## 📬 Citation
+```text
+@article{son2026evaluating,
+  title={Evaluating Over-Empathizing in Emotional Support Conversations: A User-Centered Framework},
+  author={Son, Suhyune and Koo, Seonmin and Zi, Evelyn H and Jang, Jungsun and Lim, Heuiseok},
+  journal={Expert Systems with Applications},
+  pages={131059},
+  year={2026},
+  publisher={Elsevier}
+}
+```
 
